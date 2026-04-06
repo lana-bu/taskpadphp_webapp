@@ -1,9 +1,9 @@
 :root {
-    --primary-color: #003844;
-    --secondary-color: #69ebd0;
-    --text-color: #182825;
-    --accent-color: #c44536;
-    --reverse-text-color: #f5dbcb;
+    --accent-color: #5ca4a9;
+    --secondary-color: #0e1c36;
+    --primary-color: #477998;
+    --danger-color: #dd614a;
+    --light-color: #ffede1;
     --spacing: 0.5em;
 }
 
@@ -45,7 +45,7 @@ body {
 }
 
 .content-container {
-    color: var(--text-color);
+    color: var(--secondary-color);
 }
 
 .footer-container {
