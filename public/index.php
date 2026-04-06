@@ -29,9 +29,18 @@
                 echo "No tasks yet. Add one below!";
             } else {
                 foreach($tasks as $task) {
-                    echo "<pre>";
-                    print_r($task);
-                    echo "</pre>";
+                    $id = $task["id"];
+                    $title = $task["title"];
+                    $description = $task["description"];
+                    $priority = $task["priority"];
+                    $due = $task["due"];
+                    $completed = $task["completed"];
+                    echo $id;
+                    echo $title;
+                    echo $description;
+                    echo $priority;
+                    echo $due;
+                    echo $completed;
                 }
             }
         ?>
