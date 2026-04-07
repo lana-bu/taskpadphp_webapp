@@ -8,18 +8,15 @@ include "../src/templates/header.php";
 
 <main class="content-container">
     <?php
-        $json = file_get_contents('../data/tasks.json');
+        require_once("../src/Storage.php");
 
-        if ($json === false) {
-            die('Error reading the JSON file');
-        }
+        $storage = new Storage("../data/tasks.json");
+        $taskList = $storage->getTasks();
 
-        $tasks = json_decode($json, true);
-
-        if ($tasks === null) {
+        if ($taskList === null) {
             echo "No tasks yet. Add one below!";
         } else {
-            foreach($tasks as $task) {
+            foreach($taskList as $task) {
                 $id = $task["id"];
                 $title = $task["title"];
                 $description = $task["description"];
