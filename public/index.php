@@ -35,7 +35,7 @@ include "../src/templates/header.php";
             }
         }
     ?>
-    <button class="btn popup-trigger-btn">Add Task</button>
+    <button class="btn redirect-btn" onclick="location.href='create.php'">Add Task</button>
 </main>
 
 <?php
