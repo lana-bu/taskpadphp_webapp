@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Build
 
 on:
   push:
@@ -11,26 +11,29 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    env:
+      COMPOSER_NO_DEV: 1
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+      - name: Install Composer packages
+        uses: ramsey/composer-install@v3
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: |
+            application
+            vendor
+            public
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
