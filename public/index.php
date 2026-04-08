@@ -12,7 +12,7 @@ include "../src/templates/header.php";
         <input type="text" className="search-input" placeholder='Search for tasks...' value="" />                        
     </div>
     <?php
-        require_once("../src/Storage.php");
+        require_once("../src/storage.php");
 
         $taskRepo = TaskRepository::getInstance("../data/tasks.json");
 
