@@ -1,5 +1,14 @@
 <!-- form (GET) and handler (POST) -->
-<?php
+
+<?php // form submission handler
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // validate, save, redirect to index.php (PRG pattern)
+    require_once("../src/validation.php");
+    require_once("../src/storage.php");
+}
+?>
+
+<?php // site header
 $title = "Task Creation | TaskPadPHP";
 $description = "Create a new task.";
 
@@ -8,7 +17,7 @@ include "../src/templates/header.php";
 
 <main class="content-container">
     <button class="btn redirect-btn back-btn" onclick="location.href='index.php'">Back to List</button>
-    <form action="GET" class="create-form">
+    <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
             <div class="form-input-group">
@@ -44,6 +53,6 @@ include "../src/templates/header.php";
     </form>
 </main>
 
-<?php
+<?php // site footer
     include "../src/templates/footer.php"; 
 ?>

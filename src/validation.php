@@ -2,7 +2,7 @@
 <?php
 
 class Validator {
-    validateCreate($input[]) : array {
+    validateCreate(array $input) : array {
         
     }
 }
