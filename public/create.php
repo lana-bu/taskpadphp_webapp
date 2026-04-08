@@ -1,7 +1,19 @@
 <!-- form (GET) and handler (POST) -->
 
-<?php // form submission handler
+<?php 
+// for token check
+require_once("../src/csrf.php");
+session_start();
+
+// form submission handler
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // token check
+    $token = $_POST['csrf_token'] ?? ''; // empty string means not set
+
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) { // token does not match or is not set
+        die('Invalid CSRF token');
+    }
+
     // validate, save, redirect to index.php (PRG pattern)
     require_once("../src/validation.php");
     require_once("../src/storage.php");
@@ -13,9 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskRepo->addTask($task);
     header('Location: index.php');
 }
-?>
 
-<?php // site header
+// site header
 $title = "Task Creation | TaskPadPHP";
 $description = "Create a new task.";
 
@@ -27,6 +38,7 @@ include "../src/templates/header.php";
     <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-input-group">
                 <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
