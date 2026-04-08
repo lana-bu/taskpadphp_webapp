@@ -18,13 +18,37 @@ class Task {
         $this->completed = $task["completed"];
     }
 
-    public function getInfo() {
+    public function printInfo() {
         echo $this->id;
         echo $this->title;
         echo $this->description;
         echo $this->priority;
         echo $this->due;
         echo $this->completed;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getPriority() {
+        return $this->priority;
+    }
+
+    public function getDue() {
+        return $this->due;
+    }
+    
+    public function getCompleted() {
+        return $this->completed;
     }
 }
 
@@ -46,8 +70,8 @@ class TaskRepository {
 
         if ($taskData != null) {
             foreach($taskData as $task) {
-                $taskObject = new Task($task);
-                $this->tasks[] = $taskObject;
+                $taskObject = new Task($task); // create new task object
+                $this->tasks[] = $taskObject; // append new task
             }
         }
     }
@@ -77,14 +101,33 @@ class TaskRepository {
     }
 
     protected function add(Task $task) {
-        
+        $this->tasks[] = $task; // append new task
+        saveJson();
     }
 
     public function update(Task $task) {
-        
+        $id = $task->getId();
+
+        foreach($this->tasks as $taskObject) {
+            if ($taskObject->getID === $id) { // tasks match
+                $taskObject = $task; // update existing tasks
+                break; // stop looking
+            }
+        }
+
+        saveJson();
     }
 
     public function delete(string $id) {
-        
+        foreach($this->tasks as $task) {
+            if ($task->getID === $id) { // tasks match
+                $this->tasks = array_filter($this->tasks, function($taskObject) use ($task) {
+                    return $taskObject !== $task; // filter for non-matching tasks
+                });
+                break; // stop looking
+            }
+        }
+
+        saveJson();
     }
 }

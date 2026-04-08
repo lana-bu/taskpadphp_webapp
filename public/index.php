@@ -17,7 +17,7 @@ include "../src/templates/header.php";
         } else {
             $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                $task->getInfo();
+                $task->printInfo();
             }
         }
     ?>
