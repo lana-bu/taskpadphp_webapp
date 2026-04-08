@@ -29,7 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $taskRepo->addTask($task);
         header('Location: index.php');
     } else {
-        echo $validation["errors"]["title"];
+        if (isset($validation["errors"]["title"])) {
+            echo $validation["errors"]["title"];
+        }
+        if (isset($validation["errors"]["description"])) {
+            echo $validation["errors"]["description"];
+        }
+        if (isset($validation["errors"]["priority"])) {
+            echo $validation["errors"]["priority"];
+        }
+        if (isset($validation["errors"]["due"])) {
+            echo $validation["errors"]["due"];
+        }
     }
 }
 
