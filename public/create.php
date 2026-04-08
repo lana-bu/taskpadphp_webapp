@@ -18,10 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once("../src/validation.php");
     require_once("../src/storage.php");
 
-    $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false );
-    $info = validateCreate($formInput);
+    $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false);
+    $validation = validateCreate($formInput);
+    $sanitizedInput = $validation[2];
+    $data = array("id" => uniqid(),"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
     $taskRepo = new TaskRepository();
-    $task = new Task($info); // sanitized input
+    $task = new Task($data); // sanitized input
     $taskRepo->addTask($task);
     header('Location: index.php');
 }
