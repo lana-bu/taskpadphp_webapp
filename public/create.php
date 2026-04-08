@@ -12,16 +12,16 @@ include "../src/templates/header.php";
         <fieldset>
             <legend>Task Information</legend>
             <div class="form-input-group">
-                <label for="name" class="form-label">Name*:</label>
+                <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="name" id="name" required="required" class="form-input" placeholder="Enter name..." value={enteredName} onChange={nameChangedHandler} />
+                    <input type="text" name="title" id="title" required="required" class="form-input" placeholder="Enter title..." value="" />
                     <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span>
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="email" class="form-label">Email*:</label>
+                <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
-                    <input type="email" name="email" id="email" required="required" class="form-input" placeholder="Enter email..." value={enteredEmail} onChange={emailChangedHandler} />        
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />        
                     <span aria-live='polite' class='info-msg invalid-msg'>Please provide a valid email address.</span>
                 </div>
             </div>

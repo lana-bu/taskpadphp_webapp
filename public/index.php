@@ -7,6 +7,10 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
+    <div className='search-bar'>
+        <img class="search-icon" src="./assets/images/search.png"/>
+        <input type="text" className="search-input" placeholder='Search for tasks...' value="" />                        
+    </div>
     <?php
         require_once("../src/Storage.php");
 
