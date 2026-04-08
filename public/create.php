@@ -18,14 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once("../src/validation.php");
     require_once("../src/storage.php");
 
-    $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false);
+    $formInput = array("title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due']);
     $validation = validateCreate($formInput);
-    $sanitizedInput = $validation[2];
-    $data = array("id" => uniqid(),"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
-    $taskRepo = new TaskRepository();
-    $task = new Task($data); // sanitized input
-    $taskRepo->addTask($task);
-    header('Location: index.php');
+
+    if ($validation["isValid"]) {
+        $sanitizedInput = $validation["sanitized"];
+        $data = array("id" => $sanitizedInput['id'],"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
+        $taskRepo = new TaskRepository();
+        $task = new Task($data); // sanitized input
+        $taskRepo->addTask($task);
+        header('Location: index.php');
+    } else {
+        echo $validation["errors"]["title"];
+    }
 }
 
 // site header
@@ -44,7 +49,10 @@ include "../src/templates/header.php";
             <div class="form-input-group">
                 <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="title" id="title" required="required" class="form-input" placeholder="Enter title..." value="" />
+                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="" />
+                    <?php
+                        
+                    ?>
                     <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
                 </div>
             </div>
@@ -57,7 +65,7 @@ include "../src/templates/header.php";
             <div class="form-input-group">
                 <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
-                    <select name="priority" id="priority" required="required" class="form-input">
+                    <select name="priority" id="priority" class="form-input">
                         <option selected="true" value="Low" class="form-option">Low</option>
                         <option value="Medium" class="form-option">Medium</option>
                         <option value="High" class="form-option">High</option>
