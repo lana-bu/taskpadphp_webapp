@@ -10,25 +10,14 @@ include "../src/templates/header.php";
     <?php
         require_once("../src/Storage.php");
 
-        $storage = new Storage("../data/tasks.json");
-        $taskList = $storage->getTasks();
+        $taskRepo = new TaskRepository("../data/tasks.json");
 
-        if ($taskList === null) {
+        if ($taskRepo->isEmpty()) {
             echo "No tasks yet. Add one below!";
         } else {
+            $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                $id = $task["id"];
-                $title = $task["title"];
-                $description = $task["description"];
-                $priority = $task["priority"];
-                $due = $task["due"];
-                $completed = $task["completed"];
-                echo $id;
-                echo $title;
-                echo $description;
-                echo $priority;
-                echo $due;
-                echo $completed;
+                $task->getInfo();
             }
         }
     ?>
