@@ -26,19 +26,22 @@ include "../src/templates/header.php";
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="phone" class="form-label">Phone:</label>
+                <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
-                    <input type="tel" name="phone" id="phone" class="form-input" placeholder="Enter phone number..." pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{4}" value={enteredPhone} onChange={phoneChangedHandler} maxLength={14} />
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a valid phone number.</span>
+                    <select name="priority" id="priority" required="required" class="form-input">
+                        <option selected="true" value="Low" class="form-option">Low</option>
+                        <option value="Medium" class="form-option">Medium</option>
+                        <option value="High" class="form-option">High</option>
+                    </select>
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="birthdate" class="form-label">Birthdate:</label>
-                <input type="date" name="birthdate" id="birthdate" class="form-input" value={enteredBirthdate} onChange={birthdateChangedHandler} />                        
+                <label for="due-date" class="form-label">Due date:</label>
+                <input type="date" name="due-date" id="due-date" class="form-input" value="" />                        
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>
-        <button type="submit" class="btn submit-btn">Create New Contact</button>
+        <button type="submit" class="btn submit-btn">Create New Task</button>
     </form>
 </main>
 
