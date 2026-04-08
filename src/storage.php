@@ -50,6 +50,17 @@ class Task {
     public function getCompleted() {
         return $this->completed;
     }
+
+    public function convertToArray() {
+        return [
+            "id" => $this->id,
+            "title" => $this->title,
+            "description" => $this->description,
+            "priority" => $this->priority,
+            "due" => $this->due,
+            "completed" => $this->completed
+        ];                           
+    }
 }
 
 class TaskRepository {
@@ -58,6 +69,7 @@ class TaskRepository {
     private array $tasks = array();
 
     private function __construct(string $path) {
+        // change to save initial empty json once adding method exists
         $this->path = $path;
         
         $json = file_get_contents($this->path);
@@ -77,6 +89,7 @@ class TaskRepository {
     }
 
     public static function getInstance(string $path) : TaskRepository {
+        // singleton design pattern
         if (!isset(self::$instance)) {
             self::$instance = new TaskRepository($path);
         }
@@ -85,7 +98,13 @@ class TaskRepository {
     }
 
     private function saveJson() {
-        $json = json_encode($this->tasks);
+        $data = array();
+
+        foreach($this->tasks as $task) {
+            $data[] = $task->convertToArray();
+        }
+
+        $json = json_encode($data);
         file_put_contents($this->path, $json);
     }
 
@@ -100,9 +119,9 @@ class TaskRepository {
         return $this->tasks;
     }
 
-    protected function add(Task $task) {
+    public function add(Task $task) {
         $this->tasks[] = $task; // append new task
-        saveJson();
+        $this->saveJson();
     }
 
     public function update(Task $task) {
@@ -115,7 +134,7 @@ class TaskRepository {
             }
         }
 
-        saveJson();
+        $this->saveJson();
     }
 
     public function delete(string $id) {
@@ -128,6 +147,6 @@ class TaskRepository {
             }
         }
 
-        saveJson();
+        $this->saveJson();
     }
 }
