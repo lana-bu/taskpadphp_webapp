@@ -12,7 +12,7 @@
         "title": "Task Test 2",
         "description": "This task is also for testing site layout",
         "priority": "High",
-        "due": null,
+        "due": "",
         "completed": true
     }
 ]
