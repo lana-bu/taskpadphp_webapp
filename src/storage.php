@@ -51,7 +51,13 @@ class Task {
         return $this->completed;
     }
 
-    public function convertToArray() {
+    public function markAsComplete() {
+        if (!$this->completed) {
+            $this->completed = true;
+        }
+    }
+
+    public function convertToArray() { // for encoding JSON
         return [
             "id" => $this->id,
             "title" => $this->title,
@@ -68,65 +74,65 @@ class TaskRepository {
     private string $path = "../data/tasks.json";
     private array $tasks = array(); // initialize empty array so objects can be added to it
 
-    public function __construct() {
-        // change to save initial empty json once adding method exists
-             
-        if (file_exists($this->path)) {
+    public function __construct() {             
+        if (file_exists($this->path)) { // get tasks from file
             $json = file_get_contents($this->path);
             $taskData = json_decode($json, true);
 
-            if ($taskData != null) {
+            if ($taskData != null) { // tasks exist
                 foreach($taskData as $task) {
                     $taskObject = new Task($task); // create new task object
                     $this->tasks[] = $taskObject; // append new task
                 }
             }
-        } else {
+        } else { // create tasks.json file with empty array
             $this->saveJson();
         }
     }
 
     private function saveJson() {
-        $data = array();
+        $taskData = array(); // to hold task arrays
 
         foreach($this->tasks as $task) {
-            $data[] = $task->convertToArray();
+            $taskData[] = $task->convertToArray(); // append task as array
         }
 
-        $json = json_encode($data, JSON_PRETTY_PRINT);
-        file_put_contents($this->path, $json);
+        $json = json_encode($taskData, JSON_PRETTY_PRINT); // encode array of task arrays as JSON string with pretty print
+        file_put_contents($this->path, $json); // overwrite contents of tasks.json
     }
 
     public function isEmpty() {
         if (count($this->tasks) < 1) {
-            return true;
+            return true; // array is empty
         }
-        return false;
+
+        return false; // array is not empty
     }
 
     public function all() : array {
-        return $this->tasks;
+        return $this->tasks; // array of all Task objects
     }
 
-    public function add(Task $task) {
+    public function addTask(Task $task) {
         $this->tasks[] = $task; // append new task
         $this->saveJson();
     }
 
-    public function update(Task $task) {
-        $id = $task->getId();
+    public function completeTask(Task $task) { // maybe pass ID isntead
+        $task->markAsComplete(); // should hopefully mark task object already in list as complete
+        // $id = $task->getId();
 
-        foreach($this->tasks as $taskObject) {
-            if ($taskObject->getID === $id) { // tasks match
-                $taskObject = $task; // update existing tasks
-                break; // stop looking
-            }
-        }
+        // foreach($this->tasks as $taskObject) {
+        //     if ($taskObject->getID === $id) { // tasks match
+        //         $taskObject = $task; // update existing tasks
+        //         break; // stop looking
+        //     }
+        // }
 
         $this->saveJson();
     }
 
-    public function delete(string $id) {
+    public function deleteTask(string $id) {
         foreach($this->tasks as $task) {
             if ($task->getID === $id) { // tasks match
                 $this->tasks = array_filter($this->tasks, function($taskObject) use ($task) {

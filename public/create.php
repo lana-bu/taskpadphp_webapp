@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $info = $validator->validateCreate($formInput);
     $taskRepo = new TaskRepository();
     $task = new Task($info); // sanitized input
-    $taskRepo->add($task);
+    $taskRepo->addTask($task);
     header('Location: index.php');
 }
 ?>
