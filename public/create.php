@@ -6,9 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once("../src/validation.php");
     require_once("../src/storage.php");
 
-    $validator = new Validator();
     $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false );
-    $info = $validator->validateCreate($formInput);
+    $info = validateCreate($formInput);
     $taskRepo = new TaskRepository();
     $task = new Task($info); // sanitized input
     $taskRepo->addTask($task);
