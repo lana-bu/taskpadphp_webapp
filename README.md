@@ -8,7 +8,6 @@ This will be a web app that uses PHP for server-side processing.
 - Dynamically adding header and footer: https://t4tutorials.com/how-to-create-the-same-header-and-footer-on-separate-web-pages-in-php/
 - Redirect button: https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link
 - Saving array to JSON file: https://stackoverflow.com/questions/7895335/append-data-to-a-json-file-with-php
-- Singleton design pattern in PHP: https://refactoring.guru/design-patterns/singleton/php/example#example-0
 ### Images
 - Logo: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=note&selected=Material+Symbols+Outlined:event_note:FILL@0;wght@400;GRAD@0;opsz@48
 - Search icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=search&selected=Material+Symbols+Outlined:search:FILL@0;wght@400;GRAD@0;opsz@48
