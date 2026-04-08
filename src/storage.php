@@ -19,12 +19,12 @@ class Task {
     }
 
     public function printInfo() {
-        echo $this->id;
-        echo $this->title;
-        echo $this->description;
-        echo $this->priority;
-        echo $this->due;
-        echo $this->completed;
+        echo htmlspecialchars($this->id);
+        echo htmlspecialchars($this->title);
+        echo htmlspecialchars($this->description);
+        echo htmlspecialchars($this->priority);
+        echo htmlspecialchars($this->due);
+        echo htmlspecialchars($this->completed);
     }
 
     public function getId() {
