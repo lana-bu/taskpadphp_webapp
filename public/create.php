@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validator = new Validator();
     $formInput = array("id" => "123", "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false );
     $info = $validator->validateCreate($formInput);
-    $taskRepo = TaskRepository::getInstance("../data/tasks.json");
+    $taskRepo = new TaskRepository();
     $task = new Task($info); // sanitized input
     $taskRepo->add($task);
     header('Location: index.php');

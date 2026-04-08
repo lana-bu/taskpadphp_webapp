@@ -65,36 +65,25 @@ class Task {
 
 class TaskRepository {
     private static TaskRepository $instance;
-    private string $path;
-    private array $tasks = array();
+    private string $path = "../data/tasks.json";
+    private array $tasks = array(); // initialize empty array so objects can be added to it
 
-    private function __construct(string $path) {
+    public function __construct() {
         // change to save initial empty json once adding method exists
-        $this->path = $path;
-        
-        $json = file_get_contents($this->path);
+             
+        if (file_exists($this->path)) {
+            $json = file_get_contents($this->path);
+            $taskData = json_decode($json, true);
 
-        if ($json === false) {
-            die('Error reading the JSON file');
-        }
-
-        $taskData = json_decode($json, true);
-
-        if ($taskData != null) {
-            foreach($taskData as $task) {
-                $taskObject = new Task($task); // create new task object
-                $this->tasks[] = $taskObject; // append new task
+            if ($taskData != null) {
+                foreach($taskData as $task) {
+                    $taskObject = new Task($task); // create new task object
+                    $this->tasks[] = $taskObject; // append new task
+                }
             }
+        } else {
+            $this->saveJson();
         }
-    }
-
-    public static function getInstance(string $path) : TaskRepository {
-        // singleton design pattern
-        if (!isset(self::$instance)) {
-            self::$instance = new TaskRepository($path);
-        }
-
-        return self::$instance;
     }
 
     private function saveJson() {
@@ -104,7 +93,7 @@ class TaskRepository {
             $data[] = $task->convertToArray();
         }
 
-        $json = json_encode($data);
+        $json = json_encode($data, JSON_PRETTY_PRINT);
         file_put_contents($this->path, $json);
     }
 
