@@ -15,14 +15,13 @@ include "../src/templates/header.php";
                 <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
                     <input type="text" name="title" id="title" required="required" class="form-input" placeholder="Enter title..." value="" />
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span>
+                    <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
                 </div>
             </div>
             <div class="form-input-group">
                 <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
                     <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />        
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a valid email address.</span>
                 </div>
             </div>
             <div class="form-input-group">
