@@ -1,5 +1,34 @@
 <!-- form (GET) and handler (POST) -->
-<?php
+
+<?php 
+// for token check
+require_once("../src/csrf.php");
+session_start();
+
+// form submission handler
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // token check
+    $token = $_POST['csrf_token'] ?? ''; // empty string means not set
+
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) { // token does not match or is not set
+        die('Invalid CSRF token');
+    }
+
+    // validate, save, redirect to index.php (PRG pattern)
+    require_once("../src/validation.php");
+    require_once("../src/storage.php");
+
+    $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false);
+    $validation = validateCreate($formInput);
+    $sanitizedInput = $validation[2];
+    $data = array("id" => uniqid(),"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
+    $taskRepo = new TaskRepository();
+    $task = new Task($data); // sanitized input
+    $taskRepo->addTask($task);
+    header('Location: index.php');
+}
+
+// site header
 $title = "Task Creation | TaskPadPHP";
 $description = "Create a new task.";
 
@@ -8,40 +37,43 @@ include "../src/templates/header.php";
 
 <main class="content-container">
     <button class="btn redirect-btn back-btn" onclick="location.href='index.php'">Back to List</button>
-    <form action="GET" class="create-form">
+    <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-input-group">
-                <label for="name" class="form-label">Name*:</label>
+                <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="name" id="name" required="required" class="form-input" placeholder="Enter name..." value={enteredName} onChange={nameChangedHandler} />
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span>
+                    <input type="text" name="title" id="title" required="required" class="form-input" placeholder="Enter title..." value="" />
+                    <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="email" class="form-label">Email*:</label>
+                <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
-                    <input type="email" name="email" id="email" required="required" class="form-input" placeholder="Enter email..." value={enteredEmail} onChange={emailChangedHandler} />        
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a valid email address.</span>
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />        
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="phone" class="form-label">Phone:</label>
+                <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
-                    <input type="tel" name="phone" id="phone" class="form-input" placeholder="Enter phone number..." pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{4}" value={enteredPhone} onChange={phoneChangedHandler} maxLength={14} />
-                    <span aria-live='polite' class='info-msg invalid-msg'>Please provide a valid phone number.</span>
+                    <select name="priority" id="priority" required="required" class="form-input">
+                        <option selected="true" value="Low" class="form-option">Low</option>
+                        <option value="Medium" class="form-option">Medium</option>
+                        <option value="High" class="form-option">High</option>
+                    </select>
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="birthdate" class="form-label">Birthdate:</label>
-                <input type="date" name="birthdate" id="birthdate" class="form-input" value={enteredBirthdate} onChange={birthdateChangedHandler} />                        
+                <label for="due" class="form-label">Due date:</label>
+                <input type="date" name="due" id="due" class="form-input" value="" />                        
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>
-        <button type="submit" class="btn submit-btn">Create New Contact</button>
+        <button type="submit" class="btn submit-btn">Create New Task</button>
     </form>
 </main>
 
-<?php
+<?php // site footer
     include "../src/templates/footer.php"; 
 ?>

@@ -7,10 +7,14 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
+    <div className='search-bar'>
+        <img class="search-icon" src="./assets/images/search.png"/>
+        <input type="text" className="search-input" placeholder='Search for tasks...' value="" />                        
+    </div>
     <?php
-        require_once("../src/Storage.php");
+        require_once("../src/storage.php");
 
-        $taskRepo = TaskRepository::getInstance("../data/tasks.json");
+        $taskRepo = new TaskRepository();
 
         if ($taskRepo->isEmpty()) {
             echo "No tasks yet. Add one below!";

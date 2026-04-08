@@ -19,12 +19,12 @@ class Task {
     }
 
     public function printInfo() {
-        echo $this->id;
-        echo $this->title;
-        echo $this->description;
-        echo $this->priority;
-        echo $this->due;
-        echo $this->completed;
+        echo htmlspecialchars($this->id);
+        echo htmlspecialchars($this->title);
+        echo htmlspecialchars($this->description);
+        echo htmlspecialchars($this->priority);
+        echo htmlspecialchars($this->due);
+        echo htmlspecialchars($this->completed);
     }
 
     public function getId() {
@@ -50,75 +50,89 @@ class Task {
     public function getCompleted() {
         return $this->completed;
     }
+
+    public function markAsComplete() {
+        if (!$this->completed) {
+            $this->completed = true;
+        }
+    }
+
+    public function convertToArray() { // for encoding JSON
+        return [
+            "id" => $this->id,
+            "title" => $this->title,
+            "description" => $this->description,
+            "priority" => $this->priority,
+            "due" => $this->due,
+            "completed" => $this->completed
+        ];                           
+    }
 }
 
 class TaskRepository {
     private static TaskRepository $instance;
-    private string $path;
-    private array $tasks = array();
+    private string $path = "../data/tasks.json";
+    private array $tasks = array(); // initialize empty array so objects can be added to it
 
-    private function __construct(string $path) {
-        $this->path = $path;
-        
-        $json = file_get_contents($this->path);
+    public function __construct() {             
+        if (file_exists($this->path)) { // get tasks from file
+            $json = file_get_contents($this->path);
+            $taskData = json_decode($json, true);
 
-        if ($json === false) {
-            die('Error reading the JSON file');
-        }
-
-        $taskData = json_decode($json, true);
-
-        if ($taskData != null) {
-            foreach($taskData as $task) {
-                $taskObject = new Task($task); // create new task object
-                $this->tasks[] = $taskObject; // append new task
+            if ($taskData != null) { // tasks exist
+                foreach($taskData as $task) {
+                    $taskObject = new Task($task); // create new task object
+                    $this->tasks[] = $taskObject; // append new task
+                }
             }
+        } else { // create tasks.json file with empty array
+            $this->saveJson();
         }
-    }
-
-    public static function getInstance(string $path) : TaskRepository {
-        if (!isset(self::$instance)) {
-            self::$instance = new TaskRepository($path);
-        }
-
-        return self::$instance;
     }
 
     private function saveJson() {
-        $json = json_encode($this->tasks);
-        file_put_contents($this->path, $json);
+        $taskData = array(); // to hold task arrays
+
+        foreach($this->tasks as $task) {
+            $taskData[] = $task->convertToArray(); // append task as array
+        }
+
+        $json = json_encode($taskData, JSON_PRETTY_PRINT); // encode array of task arrays as JSON string with pretty print
+        file_put_contents($this->path, $json); // overwrite contents of tasks.json
     }
 
     public function isEmpty() {
         if (count($this->tasks) < 1) {
-            return true;
+            return true; // array is empty
         }
-        return false;
+
+        return false; // array is not empty
     }
 
     public function all() : array {
-        return $this->tasks;
+        return $this->tasks; // array of all Task objects
     }
 
-    protected function add(Task $task) {
+    public function addTask(Task $task) {
         $this->tasks[] = $task; // append new task
-        saveJson();
+        $this->saveJson();
     }
 
-    public function update(Task $task) {
-        $id = $task->getId();
+    public function completeTask(Task $task) { // maybe pass ID isntead
+        $task->markAsComplete(); // should hopefully mark task object already in list as complete
+        // $id = $task->getId();
 
-        foreach($this->tasks as $taskObject) {
-            if ($taskObject->getID === $id) { // tasks match
-                $taskObject = $task; // update existing tasks
-                break; // stop looking
-            }
-        }
+        // foreach($this->tasks as $taskObject) {
+        //     if ($taskObject->getID === $id) { // tasks match
+        //         $taskObject = $task; // update existing tasks
+        //         break; // stop looking
+        //     }
+        // }
 
-        saveJson();
+        $this->saveJson();
     }
 
-    public function delete(string $id) {
+    public function deleteTask(string $id) {
         foreach($this->tasks as $task) {
             if ($task->getID === $id) { // tasks match
                 $this->tasks = array_filter($this->tasks, function($taskObject) use ($task) {
@@ -128,6 +142,6 @@ class TaskRepository {
             }
         }
 
-        saveJson();
+        $this->saveJson();
     }
 }
