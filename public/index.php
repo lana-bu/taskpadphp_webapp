@@ -10,7 +10,7 @@ include "../src/templates/header.php";
     <?php
         require_once("../src/Storage.php");
 
-        $taskRepo = new TaskRepository("../data/tasks.json");
+        $taskRepo = TaskRepository::getInstance("../data/tasks.json");
 
         if ($taskRepo->isEmpty()) {
             echo "No tasks yet. Add one below!";

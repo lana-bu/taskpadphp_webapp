@@ -29,10 +29,11 @@ class Task {
 }
 
 class TaskRepository {
+    private static TaskRepository $instance;
     private string $path;
     private array $tasks = array();
 
-    public function __construct(string $path) {
+    private function __construct(string $path) {
         $this->path = $path;
         
         $json = file_get_contents($this->path);
@@ -51,6 +52,19 @@ class TaskRepository {
         }
     }
 
+    public static function getInstance(string $path) : TaskRepository {
+        if (!isset(self::$instance)) {
+            self::$instance = new TaskRepository($path);
+        }
+
+        return self::$instance;
+    }
+
+    private function saveJson() {
+        $json = json_encode($this->tasks);
+        file_put_contents($this->path, $json);
+    }
+
     public function isEmpty() {
         if (count($this->tasks) < 1) {
             return true;
@@ -62,11 +76,15 @@ class TaskRepository {
         return $this->tasks;
     }
 
-    public function saveJson(array $tasks) {
-        $this->tasks = $tasks;
-        $this->json = json_encode($this->tasks);
-        file_put_contents($this->path, $json);
+    protected function add(Task $task) {
+        
     }
 
+    public function update(Task $task) {
+        
+    }
 
+    public function delete(string $id) {
+        
+    }
 }
