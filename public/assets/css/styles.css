@@ -1,7 +1,7 @@
 :root {
-    --accent-color: #68c8cf;
-    --secondary-color: #0e1c36;
     --primary-color: #477998;
+    --secondary-color: #0e1c36;
+    --accent-color: #68c8cf;
     --danger-color: #dd614a;
     --light-color: #ffede1;
     --spacing: 0.5em;
@@ -64,6 +64,10 @@ body {
 
 .invalid-msg {
   color: var(--danger-color);
+}
+
+.task-status {
+    fill: var(--accent-color);
 }
 
 .btn {

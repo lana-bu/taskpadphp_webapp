@@ -7,9 +7,9 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
-    <div className='search-bar'>
+    <div class='search-bar'>
         <img class="search-icon" src="./assets/images/search.png"/>
-        <input type="text" className="search-input" placeholder='Search for tasks...' value="" />                        
+        <input type="text" class="search-input" placeholder='Search for tasks...' value="" />                        
     </div>
     <?php
         require_once("../src/storage.php");
@@ -21,15 +21,21 @@ include "../src/templates/header.php";
         } else {
             $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                echo "<div className='list-item'>
-                    <span className='task-title'>{$task->getTitle()}</span>
-                    <div className='task-info'>
-                        <span className='task-element task-description'>Description: {$task->getDescription()}</span>
-                        <span className='task-element task-priority'>Priority: {$task->getPriority()}</span>
-                        <span className='task-element task-due'>Due by: {$task->getDue()}</span>
-                        <span className='task-element task-due'>Completed: {$task->getCompleted()}</span>
-                    </div>
-                    <button className='btn delete-btn'>delete</button>
+                echo "<div class='list-item'>
+                    <span class='task-title'>{$task->getTitle()}</span>
+                    <div class='task-info'>
+                        <span class='task-element task-description'>Description: {$task->getDescription()}</span>
+                        <span class='task-element task-priority'>Priority: {$task->getPriority()}</span>
+                        <span class='task-element task-due'>Due by: {$task->getDue()}</span>
+                    </div>";
+
+                if ($task->getCompleted()) {
+                    echo "<img class='task-status' src='./assets/images/complete.svg'/>";
+                } else {
+                    echo "<img class='task-status' src='./assets/images/incomplete.svg'/>";
+                }
+                
+                echo "<button class='btn delete-btn'>delete</button>
                 </div>";
             }
         }
