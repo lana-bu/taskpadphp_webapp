@@ -13,3 +13,5 @@ This will be a web app that uses PHP for server-side processing.
 ### Images
 - Logo: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=note&selected=Material+Symbols+Outlined:event_note:FILL@0;wght@400;GRAD@0;opsz@48
 - Search icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=search&selected=Material+Symbols+Outlined:search:FILL@0;wght@400;GRAD@0;opsz@48
+- Complete icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=complete&selected=Material+Symbols+Outlined:check_small:FILL@0;wght@400;GRAD@0;opsz@48
+- Incomplete icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=incomplete&selected=Material+Symbols+Outlined:check_indeterminate_small:FILL@0;wght@400;GRAD@0;opsz@48
