@@ -1,4 +1,3 @@
-<!-- token generate/verify  -->
 <?php
     function csrf_token(): string {
         if (empty($_SESSION['csrf_token'])) {

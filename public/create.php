@@ -1,5 +1,3 @@
-<!-- form (GET) and handler (POST) -->
-
 <?php 
 // for token check
 require_once("../src/csrf.php");

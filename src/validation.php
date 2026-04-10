@@ -1,4 +1,3 @@
-<!-- validation/sanitization helpers -->
 <?php
 function validateCreate(array $input) : array {
     $errors = [];

@@ -1,4 +1,3 @@
-<!-- load/save JSON helpers -->
 <?php
 
 class Task {
