@@ -1,4 +1,3 @@
-<!-- complete/delete handlers (POST) -->
 <?php
 // for token check
 require_once("../src/csrf.php");
@@ -13,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // include necessary classes
+    require_once("../src/flash.php");
+
     require_once("../src/storage.php");
     $taskList = new TaskRepository();
 
@@ -22,8 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // handlers
     if ($_POST['action'] === 'complete') { // complete handler
         $taskList->completeTask($taskId);
+        
+        create_flash_message('action', 'Task completed.', FLASH_SUCCESS);
     } else if ($_POST['action'] === 'delete') { // delete handler
         $taskList->deleteTask($taskId);
+
+        create_flash_message('action', 'Task deleted.', FLASH_SUCCESS);
     }
 
     header('Location: index.php');

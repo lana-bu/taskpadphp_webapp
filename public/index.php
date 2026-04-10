@@ -1,8 +1,10 @@
-<!-- list and filter (GET), flash messages -->
 <?php
 // for token check
 require_once("../src/csrf.php");
 session_start();
+
+// flash message functions
+require_once("../src/flash.php");
 
 // site header
 $title = "Task List | TaskPadPHP";
@@ -12,6 +14,7 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
+    <div class="flash"><?php display_flash_message('action'); ?></div>
     <form class='search-bar' method='get' action='index.php'>
         <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px">
             <path class="search-icon" d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/>
