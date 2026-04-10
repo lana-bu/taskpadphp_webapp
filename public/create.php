@@ -14,16 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Invalid CSRF token');
     }
 
-    // validate, save, redirect to index.php (PRG pattern)
+    // include necessary classes and functions
     require_once("../src/validation.php");
     require_once("../src/storage.php");
 
+    // validate input
     $formInput = array("title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due']);
     $validation = validateCreate($formInput);
 
+    // save input to task repository and redirect to index.php (if valid)
     if ($validation["isValid"]) {
-        $sanitizedInput = $validation["sanitized"];
-        $data = array("id" => $sanitizedInput['id'],"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
+        $sanitized = $validation["sanitized"];
+        $data = array("id" => $sanitized['id'],"title" => $sanitized['title'], "description" => $sanitized['description'], "priority" => $sanitized['priority'], "due" => $sanitized['due'], "completed" => false);
         $taskRepo = new TaskRepository();
         $task = new Task($data); // sanitized input
         $taskRepo->addTask($task);
@@ -45,51 +47,70 @@ include "../src/templates/header.php";
             <legend>Task Information</legend>
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-input-group">
-                <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["title"]; } ?>" />
-                    <?php
+                    <label for="title" class="form-label">Title*:</label>
+                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="<?php
+                        if (isset($validation["sanitized"])) {
+                            echo $validation["sanitized"]["title"];
+                        }
+                    ?>" />
+                    <span class='info-msg invalid-msg'><?php
                         if (isset($validation["errors"]["title"])) {
                             echo $validation["errors"]["title"];
                         }
-                    ?>
-                    <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
                 <div class='input-box'>
                     <label for="description" class="form-label">Description:</label>
-                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["description"]; } ?>" />
-                    <?php
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="<?php
+                        if (isset($validation["sanitized"])) {
+                            echo $validation["sanitized"]["description"];
+                        }
+                    ?>" />
+                    <span class='info-msg invalid-msg'><?php
                         if (isset($validation["errors"]["description"])) {
                             echo $validation["errors"]["description"];
                         }
-                    ?>    
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
                 <div class='input-box'>
                     <label for="priority" class="form-label">Priority*:</label>
                     <select name="priority" id="priority" class="form-input">
-                        <option <?php if (!isset($validation["sanitized"]) || $validation["sanitized"]["priority"] === "Low") { echo "selected"; } ?> value="Low" class="form-option">Low</option>
-                        <option <?php if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "Medium") { echo "selected"; } ?> value="Medium" class="form-option">Medium</option>
+                        <option <?php
+                            if (!isset($validation["sanitized"]) || $validation["sanitized"]["priority"] === "Low") {
+                                echo "selected";
+                            }
+                        ?> value="Low" class="form-option">Low</option>
+                        <option <?php
+                            if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "Medium") {
+                                echo "selected";
+                            }
+                        ?> value="Medium" class="form-option">Medium</option>
                         <option <?php if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "High") { echo "selected"; } ?> value="High" class="form-option">High</option>
                     </select>
-                    <?php
+                    <span class='info-msg invalid-msg'><?php
                         if (isset($validation["errors"]["priority"])) {
                             echo $validation["errors"]["priority"];
                         }
-                    ?>
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
                 <label for="due" class="form-label">Due date:</label>
-                <input type="date" name="due" id="due" class="form-input" value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["due"]; } ?>" />
-                <?php
+                <input type="date" name="due" id="due" class="form-input" value="<?php
+                    if (isset($validation["sanitized"])) {
+                        echo $validation["sanitized"]["due"];
+                    }
+                ?>" />
+                <span class='info-msg invalid-msg'><?php
                     if (isset($validation["errors"]["due"])) {
                         echo $validation["errors"]["due"];
                     }
-                ?>                      
+                ?></span>                
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>
