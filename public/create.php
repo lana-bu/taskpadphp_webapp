@@ -28,19 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $task = new Task($data); // sanitized input
         $taskRepo->addTask($task);
         header('Location: index.php');
-    } else {
-        if (isset($validation["errors"]["title"])) {
-            echo $validation["errors"]["title"];
-        }
-        if (isset($validation["errors"]["description"])) {
-            echo $validation["errors"]["description"];
-        }
-        if (isset($validation["errors"]["priority"])) {
-            echo $validation["errors"]["priority"];
-        }
-        if (isset($validation["errors"]["due"])) {
-            echo $validation["errors"]["due"];
-        }
     }
 }
 
@@ -62,30 +49,47 @@ include "../src/templates/header.php";
                 <div class='input-box'>
                     <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="" />
                     <?php
-                        
+                        if (isset($validation["errors"]["title"])) {
+                            echo $validation["errors"]["title"];
+                        }
                     ?>
                     <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
-                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />        
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />
+                    <?php
+                        if (isset($validation["errors"]["description"])) {
+                            echo $validation["errors"]["description"];
+                        }
+                    ?>    
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
+                    <label for="priority" class="form-label">Priority*:</label>
                     <select name="priority" id="priority" class="form-input">
                         <option selected="true" value="Low" class="form-option">Low</option>
                         <option value="Medium" class="form-option">Medium</option>
                         <option value="High" class="form-option">High</option>
                     </select>
+                    <?php
+                        if (isset($validation["errors"]["priority"])) {
+                            echo $validation["errors"]["priority"];
+                        }
+                    ?>
                 </div>
             </div>
             <div class="form-input-group">
                 <label for="due" class="form-label">Due date:</label>
-                <input type="date" name="due" id="due" class="form-input" value="" />                        
+                <input type="date" name="due" id="due" class="form-input" value="" />
+                <?php
+                    if (isset($validation["errors"]["due"])) {
+                        echo $validation["errors"]["due"];
+                    }
+                ?>                      
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>
