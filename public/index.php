@@ -23,7 +23,9 @@ include "../src/templates/header.php";
         } else {
             $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                echo "<div class='list-item'>
+                echo "<form class='list-item' action='actions.php' method='post'>
+                    <input type='hidden' name='csrf_token' value='<?= csrf_token() ?>'>
+                    <input type='hidden' name='task-id' value='{$task->getId()}'>
                     <span class='task-title'>{$task->getTitle()}</span>
                     <div class='task-info'>
                         <span class='task-element task-description'>Description: {$task->getDescription()}</span>
@@ -32,17 +34,20 @@ include "../src/templates/header.php";
                     </div>";
 
                 if ($task->getCompleted()) {
-                    echo "<svg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp'>
-                        <path class='task-status complete-icon' d='M400-318 247-471l42-42 111 111 271-271 42 42-313 313Z'/>
+                    echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp role='img' aria-label='Task completed'>
+                        <title>Task completed</title>
+                        <path class='complete-icon' title='Task completed' d='M400-318 247-471l42-42 111 111 271-271 42 42-313 313Z'/>
                     </svg>";
                 } else {
-                    echo "<svg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp'>
-                        <path class='task-status incomplete-icon' d='M240-450v-60h480v60H240Z'/>
+                    echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp' role='img' aria-label='Task incomplete'>
+                        <title>Task incomplete</title>
+                        <path class='incomplete-icon' d='M240-450v-60h480v60H240Z'/>
                     </svg>";
                 }
                 
-                echo "<button class='btn delete-btn'>delete</button>
-                </div>";
+                echo "<input class='btn complete-btn' type='submit' name='complete' value='Mark as Complete'/>
+                    <input class='btn delete-btn' type='submit' name='delete' value='Delete Task'/>
+                </form>";
             }
         }
     ?>
