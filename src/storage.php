@@ -109,23 +109,20 @@ class TaskRepository {
         $this->saveJson();
     }
 
-    public function completeTask(Task $task) { // maybe pass ID isntead
-        $task->markAsComplete(); // should hopefully mark task object already in list as complete
-        // $id = $task->getId();
-
-        // foreach($this->tasks as $taskObject) {
-        //     if ($taskObject->getID === $id) { // tasks match
-        //         $taskObject = $task; // update existing tasks
-        //         break; // stop looking
-        //     }
-        // }
+    public function completeTask(string $id) {
+        foreach($this->tasks as $task) {
+            if ($task->getId() === $id) { // tasks match
+                $task->markAsComplete();
+                break; // stop looking
+            }
+        }
 
         $this->saveJson();
     }
 
     public function deleteTask(string $id) {
         foreach($this->tasks as $task) {
-            if ($task->getID === $id) { // tasks match
+            if ($task->getId() === $id) { // tasks match
                 $this->tasks = array_filter($this->tasks, function($taskObject) use ($task) {
                     return $taskObject !== $task; // filter for non-matching tasks
                 });

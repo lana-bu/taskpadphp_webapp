@@ -1,5 +1,10 @@
 <!-- list and filter (GET), flash messages -->
 <?php
+// for token check
+require_once("../src/csrf.php");
+session_start();
+
+// site header
 $title = "Task List | TaskPadPHP";
 $description = "View and filter your list of tasks.";
 
@@ -23,9 +28,7 @@ include "../src/templates/header.php";
         } else {
             $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                echo "<form class='list-item' action='actions.php' method='post'>
-                    <input type='hidden' name='csrf_token' value='<?= csrf_token() ?>'>
-                    <input type='hidden' name='task-id' value='{$task->getId()}'>
+                echo "<div class='list-item'>
                     <span class='task-title'>{$task->getTitle()}</span>
                     <div class='task-info'>
                         <span class='task-element task-description'>Description: {$task->getDescription()}</span>
@@ -45,9 +48,17 @@ include "../src/templates/header.php";
                     </svg>";
                 }
                 
-                echo "<input class='btn complete-btn' type='submit' name='complete' value='Mark as Complete'/>
-                    <input class='btn delete-btn' type='submit' name='delete' value='Delete Task'/>
-                </form>";
+                echo "<form method='post' action='actions.php'>
+                        <input type='hidden' name='csrf_token' value='" . csrf_token() . "'>
+                        <input type='hidden' name='task-id' value='{$task->getId()}'>";
+                
+                if (!$task->getCompleted()) {
+                    echo "<input class='btn complete-btn' type='submit' name='complete' value='Mark as Complete'/>";
+                }
+
+                echo "<input class='btn delete-btn' type='submit' name='delete' value='Delete Task'/>
+                    </form>
+                </div>";
             }
         }
     ?>
