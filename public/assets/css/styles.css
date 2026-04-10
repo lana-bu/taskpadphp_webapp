@@ -54,14 +54,16 @@ body {
     margin-top: var(--spacing);
 }
 
-
-
 .content-section {
     padding: var(--spacing);
 }
 
 .content-section a {
     color: var(--accent-color-2);
+}
+
+.invalid-msg {
+  color: var(--danger-color);
 }
 
 .btn {
