@@ -11,6 +11,7 @@ This will be a web app that uses PHP for server-side processing.
 - Encoding array as JSON with pretty print format: https://www.delftstack.com/howto/php/how-to-generate-json-file-in-php/
 - Flash messages: https://www.phptutorial.net/php-tutorial/php-flash-messages/
 - Directly changing SVG fill color: https://stackoverflow.com/a/34828163/31760302
+- Using SVG element in HTML and styling with CSS: https://stackoverflow.com/a/18968794/31760302;
 ### Images
 - Logo: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=note&selected=Material+Symbols+Outlined:event_note:FILL@0;wght@400;GRAD@0;opsz@48
 - Search icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=search&selected=Material+Symbols+Outlined:search:FILL@0;wght@400;GRAD@0;opsz@48
