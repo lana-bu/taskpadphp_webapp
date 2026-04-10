@@ -21,7 +21,16 @@ include "../src/templates/header.php";
         } else {
             $taskList = $taskRepo->all();
             foreach($taskList as $task) {
-                $task->printInfo();
+                echo "<div className='list-item'>
+                    <span className='task-title'>{$task->getTitle()}</span>
+                    <div className='task-info'>
+                        <span className='task-element task-description'>Description: {$task->getDescription()}</span>
+                        <span className='task-element task-priority'>Priority: {$task->getPriority()}</span>
+                        <span className='task-element task-due'>Due by: {$task->getDue()}</span>
+                        <span className='task-element task-due'>Completed: {$task->getCompleted()}</span>
+                    </div>
+                    <button className='btn delete-btn'>delete</button>
+                </div>";
             }
         }
     ?>

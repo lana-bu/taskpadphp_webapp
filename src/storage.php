@@ -18,25 +18,16 @@ class Task {
         $this->completed = $task["completed"];
     }
 
-    public function printInfo() {
-        echo htmlspecialchars($this->id);
-        echo htmlspecialchars($this->title);
-        echo htmlspecialchars($this->description);
-        echo htmlspecialchars($this->priority);
-        echo htmlspecialchars($this->due);
-        echo htmlspecialchars($this->completed);
-    }
-
     public function getId() {
         return $this->id;
     }
 
     public function getTitle() {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     public function getDescription() {
-        return $this->description;
+        return htmlspecialchars($this->description);
     }
 
     public function getPriority() {
