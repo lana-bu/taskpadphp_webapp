@@ -20,25 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskId = $_POST['task-id'];
 
     // handlers
-    if (isset($_POST['complete'])) { // complete handler
+    if ($_POST['action'] === 'complete') { // complete handler
         $taskList->completeTask($taskId);
-    } else if (isset($_POST['delete'])) { // delete handler
+    } else if ($_POST['action'] === 'delete') { // delete handler
         $taskList->deleteTask($taskId);
     }
 
     header('Location: index.php');
-
-    // // validate input
-    // $formInput = array("title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due']);
-    // $validation = validateCreate($formInput);
-
-    // // save input to task repository and redirect to index.php (if valid)
-    // if ($validation["isValid"]) {
-    //     $sanitized = $validation["sanitized"];
-    //     $data = array("id" => $sanitized['id'],"title" => $sanitized['title'], "description" => $sanitized['description'], "priority" => $sanitized['priority'], "due" => $sanitized['due'], "completed" => false);
-    //     $taskRepo = new TaskRepository();
-    //     $task = new Task($data); // sanitized input
-    //     $taskRepo->addTask($task);
-    //     header('Location: index.php');
-    // }
+    exit;
 }

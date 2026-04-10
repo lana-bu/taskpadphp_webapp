@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $task = new Task($data); // sanitized input
         $taskRepo->addTask($task);
         header('Location: index.php');
+        exit;
     }
 }
 
@@ -41,7 +42,7 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
-    <button class="btn redirect-btn back-btn" onclick="location.href='index.php'">Back to List</button>
+    <a class="btn redirect-btn href-btn" href="index.php" role="button">Back to List</a>
     <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
