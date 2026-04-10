@@ -47,7 +47,7 @@ include "../src/templates/header.php";
             <div class="form-input-group">
                 <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="" />
+                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["title"]; } ?>" />
                     <?php
                         if (isset($validation["errors"]["title"])) {
                             echo $validation["errors"]["title"];
@@ -59,7 +59,7 @@ include "../src/templates/header.php";
             <div class="form-input-group">
                 <div class='input-box'>
                     <label for="description" class="form-label">Description:</label>
-                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["description"]; } ?>" />
                     <?php
                         if (isset($validation["errors"]["description"])) {
                             echo $validation["errors"]["description"];
@@ -71,9 +71,9 @@ include "../src/templates/header.php";
                 <div class='input-box'>
                     <label for="priority" class="form-label">Priority*:</label>
                     <select name="priority" id="priority" class="form-input">
-                        <option selected="true" value="Low" class="form-option">Low</option>
-                        <option value="Medium" class="form-option">Medium</option>
-                        <option value="High" class="form-option">High</option>
+                        <option <?php if (!isset($validation["sanitized"]) || $validation["sanitized"]["priority"] === "Low") { echo "selected"; } ?> value="Low" class="form-option">Low</option>
+                        <option <?php if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "Medium") { echo "selected"; } ?> value="Medium" class="form-option">Medium</option>
+                        <option <?php if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "High") { echo "selected"; } ?> value="High" class="form-option">High</option>
                     </select>
                     <?php
                         if (isset($validation["errors"]["priority"])) {
@@ -84,7 +84,7 @@ include "../src/templates/header.php";
             </div>
             <div class="form-input-group">
                 <label for="due" class="form-label">Due date:</label>
-                <input type="date" name="due" id="due" class="form-input" value="" />
+                <input type="date" name="due" id="due" class="form-input" value="<?php if (isset($validation["sanitized"])) { echo $validation["sanitized"]["due"]; } ?>" />
                 <?php
                     if (isset($validation["errors"]["due"])) {
                         echo $validation["errors"]["due"];
