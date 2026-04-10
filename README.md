@@ -16,6 +16,7 @@ This will be a web app that uses PHP for server-side processing.
 - Adding mouseover/hover text: https://www.w3docs.com/snippets/html/how-to-add-a-mouseover-text-with-html.html
 - SVG image accessibility: https://stackoverflow.com/questions/4697100/accessibility-recommended-alt-text-convention-for-svg-and-mathml
 - Case-insensitive string search function: https://www.w3schools.com/PHP/func_string_stripos.asp
+- Extending footer to bottom of page: https://stackoverflow.com/questions/9741701/how-can-i-extend-a-footer-to-bottom-of-page
 ### Images
 - Logo: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=note&selected=Material+Symbols+Outlined:event_note:FILL@0;wght@400;GRAD@0;opsz@48
 - Search icon: https://fonts.google.com/icons?icon.size=64&icon.color=%23FFFFFF&icon.query=search&selected=Material+Symbols+Outlined:search:FILL@0;wght@400;GRAD@0;opsz@48

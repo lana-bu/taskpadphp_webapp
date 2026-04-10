@@ -52,6 +52,7 @@ body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     margin-top: var(--spacing);
+    box-shadow: 0 50vh 0 50vh var(--primary-color); /*so footer background color extends to bottom when main content is short */
 }
 
 .content-section {
