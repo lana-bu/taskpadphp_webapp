@@ -62,12 +62,32 @@ body {
     color: var(--accent-color-2);
 }
 
-.invalid-msg {
-  color: var(--danger-color);
+.logo {
+    fill: var(--secondary-color);
+    stroke: var(--secondary-color);
+    stroke-width: 20;
 }
 
-.task-status {
+.search-icon {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+    stroke-width: 20;
+}
+
+.complete-icon {
     fill: var(--accent-color);
+    stroke: var(--accent-color);
+    stroke-width: 20;
+}
+
+.incomplete-icon {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+    stroke-width: 20;
+}
+
+.invalid-msg {
+  color: var(--danger-color);
 }
 
 .btn {
