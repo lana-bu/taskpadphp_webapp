@@ -103,7 +103,7 @@ body {
 .flash {
     position: absolute;
     top: 0;
-    right: 0;
+    justify-self: center;
     animation: fadeOut 1s ease-in 1s forwards;
     font-size: 0.8em;
     color: var(--primary-color);
