@@ -1,5 +1,5 @@
 # taskpadphp_webapp
-This is my Project #2 assignment for my CIS 435 (Web Technology) course at UM-Dearborn. This web app keeps track of your tasks by allowing you to search for, complete, delete, and add any tasks as needed. It uses PHP server-side processing to dynamically access and update the task list.
+This is my Project #3 assignment for my CIS 435 (Web Technology) course at UM-Dearborn. This web app keeps track of your tasks by allowing you to search for, complete, delete, and add any tasks as needed. It uses PHP server-side processing to dynamically access and update the task list.
 ## Run Instructions
 Before beginning, make sure PHP is installed on your system and added as a PATH variable. You can download PHP with the free XAMPP package. If using XAMPP, add C:\xampp\php to the PATH in your system's environment variables.
 ### Running the Website
