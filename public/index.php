@@ -15,42 +15,50 @@ include "../src/templates/header.php";
 
 <main class="content-container">
     <div class="flash"><?php display_flash_message('action'); ?></div>
-    <form class='search-bar' method='get' action='index.php'>
-        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px">
-            <path class="search-icon" d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/>
-        </svg>
-        <input type="text" name='q' class="search-input" placeholder='Search for tasks...' value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" />
-        <select name="priority" class="form-input">
-            <option value="">Any</option>
-            <option <?php
-                if (($_GET['priority'] ?? '') === 'Low') {
-                    echo 'selected';
-                }
-            ?> value="Low">Low</option>
-            <option <?php
-                if (($_GET['priority'] ?? '') === 'Medium') {
-                    echo 'selected';
-                }
-            ?> value="Medium">Medium</option>
-            <option <?php
-                if (($_GET['priority'] ?? '') === 'High') {
-                    echo 'selected';
-                }
-            ?> value="High">High</option>
-        </select>
-        <select name="status" class="form-input">
-            <option value="">Any</option>
-            <option <?php
-                if (($_GET['status'] ?? '') === 'Complete') {
-                    echo 'selected';
-                }
-            ?> value="Complete">Complete</option>
-            <option <?php
-                if (($_GET['status'] ?? '') === 'Incomplete') {
-                    echo 'selected';
-                }
-            ?> value="Incomplete">Incomplete</option>
-        </select>
+    <form class='search' method='get' action='index.php'>
+        <div class='input-box search-bar'>
+            <svg class='search-svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path class="search-icon" d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/>
+            </svg>
+            <input type="text" name='q' class="search-input" placeholder='Search for tasks...' value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" />
+        </div>
+        <div class='input-box filter-box'>
+            <label for="priority" class="form-label filter-label">Priority:</label>
+            <select name="priority" class="form-input filter-input">
+                <option value="">Any</option>
+                <option <?php
+                    if (($_GET['priority'] ?? '') === 'Low') {
+                        echo 'selected';
+                    }
+                ?> value="Low">Low</option>
+                <option <?php
+                    if (($_GET['priority'] ?? '') === 'Medium') {
+                        echo 'selected';
+                    }
+                ?> value="Medium">Medium</option>
+                <option <?php
+                    if (($_GET['priority'] ?? '') === 'High') {
+                        echo 'selected';
+                    }
+                ?> value="High">High</option>
+            </select>
+        </div>
+        <div class='input-box filter-box'>
+            <label for="status" class="form-label filter-label">Completion Status:</label>
+            <select name="status" class="form-input filter-input">
+                <option value="">Any</option>
+                <option <?php
+                    if (($_GET['status'] ?? '') === 'Complete') {
+                        echo 'selected';
+                    }
+                ?> value="Complete">Complete</option>
+                <option <?php
+                    if (($_GET['status'] ?? '') === 'Incomplete') {
+                        echo 'selected';
+                    }
+                ?> value="Incomplete">Incomplete</option>
+            </select>
+        </div>
         <button type="submit" class="btn">Filter</button>               
     </form>
     <?php
@@ -136,7 +144,7 @@ include "../src/templates/header.php";
             }
         }
     ?>
-    <a class="btn redirect-btn href-btn" href="create.php" role="button">Add Task</a>
+    <a href="create.php"><button class="btn redirect-btn">Add Task</button></a>
 </main>
 
 <?php

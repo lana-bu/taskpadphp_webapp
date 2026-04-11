@@ -15,26 +15,17 @@ body {
     margin: 0;
     font-family: Optima, 'Trebuchet MS', Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
-    display: grid;
-    grid-template-areas:
-        "header"
-        "nav"
-        "main"
-        "footer";
-}
-
-.header-container  { grid-area: header; }
-.nav-container     { grid-area: nav; }
-.content-container { grid-area: main; }
-.footer-container  { grid-area: footer; }
-
-.header-container, .footer-container {
-    padding: var(--spacing);
+    color: var(--secondary-color);
+    
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 .header-container {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    padding: 0.7em 1.5em;
 }
 
 .nav-container {
@@ -45,42 +36,59 @@ body {
 }
 
 .content-container {
-    color: var(--secondary-color);
+    padding: 1.5em;
+    position: relative;
 }
 
 .footer-container {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    padding: 0.3em 1.5em;
     margin-top: var(--spacing);
     box-shadow: 0 50vh 0 50vh var(--primary-color); /*so footer background color extends to bottom when main content is short */
+}
+
+.site-name {
+    vertical-align: middle;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.site-name-large {
+    font-size: 2.2em;
+    margin-right: auto;
 }
 
 .content-section {
     padding: var(--spacing);
 }
 
+.logo-svg {
+    width: 6%;
+}
+
 .logo {
     fill: var(--secondary-color);
     stroke: var(--secondary-color);
-    stroke-width: 20;
-}
-
-.search-icon {
-    fill: var(--primary-color);
-    stroke: var(--primary-color);
-    stroke-width: 20;
+    stroke-width: 30px;
+    vertical-align: middle;
 }
 
 .complete-icon {
     fill: var(--accent-color);
     stroke: var(--accent-color);
-    stroke-width: 20;
+    stroke-width: 20px;
 }
 
 .incomplete-icon {
     fill: var(--primary-color);
     stroke: var(--primary-color);
-    stroke-width: 20;
+    stroke-width: 20px;
+}
+
+.delete-icon {
+    fill: var(--light-color);
+    stroke: var(--light-color);
+    stroke-width: 20px;
 }
 
 @keyframes fadeOut {
@@ -89,28 +97,101 @@ body {
 }
 
 .flash {
+    position: absolute;
+    top: 0;
+    right: 0;
     animation: fadeOut 1s ease-in 1s forwards;
+    font-size: 0.8em;
+    color: var(--primary-color);
+    padding: 1em;
+    /* padding: var(--spacing);
+    z-index: 1;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    border: 1px solid var(--background-color);
+    margin-top: var(--spacing);
+    margin-right: var(--spacing); */
 }
 
 .invalid-msg {
   color: var(--danger-color);
 }
 
+input {
+  padding: 0.2em 0.4em;
+  font-weight: bold;
+  font-family: inherit;
+  border-radius: 6px;
+  border: 2px solid var(--primary-color);
+  color: var(--text-color);
+  background-color: #e2e7f0;
+}
+
+input:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar {
+  margin: var(--spacing) 0.9em;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-svg {
+    width: 7%;
+    margin: 0 0.2em;
+    vertical-align: middle;
+}
+
+.search-icon {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+    stroke-width: 36px;
+}
+
+.search-input {
+  flex-grow: 1;
+  font-size: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
 .btn {
     border: none;
-    border-radius: 6%;
+    border-radius: 8px;
     background-color: var(--accent-color);
     color: var(--text-color);
-    font-family: Optima, 'Trebuchet MS', Arial, Helvetica, sans-serif;
+    font-family: inherit;
     font-size: 1.2em;
     padding: var(--spacing);
     margin: var(--spacing);
-    align-self: center;
+    /* align-self: center; */
+    text-align: center;
 }
 
 .btn:hover {
     cursor: pointer;
-    background-color: var(--accent-color);
+    background-color: #36a9b1;
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    color: var(--light-color);
+}
+
+.delete-btn:hover {
+    background-color: #cf4026;
 }
 
 /* mobile portrait layout (479px or less */

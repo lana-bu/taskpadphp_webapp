@@ -40,7 +40,7 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
-    <a class="btn redirect-btn href-btn" href="index.php" role="button">Back to List</a>
+    <a href="index.php"><button class="btn redirect-btn">Back to List</button></a>
     <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
