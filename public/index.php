@@ -61,90 +61,92 @@ include "../src/templates/header.php";
         </div>
         <button type="submit" class="btn">Filter</button>               
     </form>
-    <?php
-        require_once("../src/storage.php");
+    <div class="list">
+        <?php
+            require_once("../src/storage.php");
 
-        $taskRepo = new TaskRepository();
+            $taskRepo = new TaskRepository();
 
-        if ($taskRepo->isEmpty()) {
-            echo "No tasks yet. Add one below!";
-        } else {
-            $taskList = $taskRepo->all();
-
-            // filter by text query
-            $q = trim($_GET['q'] ?? '');
-            if ($q !== '') {
-                $taskList = array_filter($taskList, function($task) use ($q) {
-                    return stripos($task->getTitle(), $q) !== false || stripos($task->getDescription(), $q) !== false; // query match found in title or description
-                });
-            }
-
-            // filter by priority
-            $priority = $_GET['priority'] ?? '';
-            if ($priority !== '') {
-                $taskList = array_filter($taskList, function($task) use ($priority) {
-                    return $task->getPriority() === $priority;
-                });
-            }
-
-            //filter by status
-            $status = $_GET['status'] ?? '';
-            if ($status !== '') {
-                if ($status === "Complete") {
-                    $taskList = array_filter($taskList, function($task) {
-                        return $task->getCompleted() === true;
-                    });
-                } else if ($status === "Incomplete") {
-                    $taskList = array_filter($taskList, function($task) {
-                        return $task->getCompleted() === false;
-                    });
-                }
-            }
-
-            if (empty($taskList)) {
-                echo "<p>No tasks match your filters.</p>";
+            if ($taskRepo->isEmpty()) {
+                echo "<span>No tasks yet. Add one below!</span>";
             } else {
-                foreach($taskList as $task) {
-                    echo "<div class='list-item'>
-                        <span class='task-title'>{$task->getTitle()}</span>
-                        <div class='task-info'>
-                            <span class='task-element task-description'>Description: {$task->getDescription()}</span>
-                            <span class='task-element task-priority'>Priority: {$task->getPriority()}</span>
-                            <span class='task-element task-due'>Due by: {$task->getDue()}</span>
+                $taskList = $taskRepo->all();
+
+                // filter by text query
+                $q = trim($_GET['q'] ?? '');
+                if ($q !== '') {
+                    $taskList = array_filter($taskList, function($task) use ($q) {
+                        return stripos($task->getTitle(), $q) !== false || stripos($task->getDescription(), $q) !== false; // query match found in title or description
+                    });
+                }
+
+                // filter by priority
+                $priority = $_GET['priority'] ?? '';
+                if ($priority !== '') {
+                    $taskList = array_filter($taskList, function($task) use ($priority) {
+                        return $task->getPriority() === $priority;
+                    });
+                }
+
+                //filter by status
+                $status = $_GET['status'] ?? '';
+                if ($status !== '') {
+                    if ($status === "Complete") {
+                        $taskList = array_filter($taskList, function($task) {
+                            return $task->getCompleted() === true;
+                        });
+                    } else if ($status === "Incomplete") {
+                        $taskList = array_filter($taskList, function($task) {
+                            return $task->getCompleted() === false;
+                        });
+                    }
+                }
+
+                if (empty($taskList)) {
+                    echo "<span>No tasks match your filters.</span>";
+                } else {
+                    foreach($taskList as $task) {
+                        echo "<div class='list-item'>
+                            <span class='task-title'>{$task->getTitle()}</span>
+                            <div class='task-info'>
+                                <span class='task-element task-description'>Description: {$task->getDescription()}</span>
+                                <span class='task-element task-priority'>Priority: {$task->getPriority()}</span>
+                                <span class='task-element task-due'>Due by: {$task->getDue()}</span>
+                            </div>";
+
+                        if ($task->getCompleted()) {
+                            echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp role='img' aria-label='Task complete'>
+                                <title>Task complete</title>
+                                <path class='complete-icon' title='Task complete' d='M400-318 247-471l42-42 111 111 271-271 42 42-313 313Z'/>
+                            </svg>";
+                        } else {
+                            echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp' role='img' aria-label='Task incomplete'>
+                                <title>Task incomplete</title>
+                                <path class='incomplete-icon' d='M240-450v-60h480v60H240Z'/>
+                            </svg>";
+                        }
+                        
+                        echo "<form method='post' action='actions.php'>
+                                <input type='hidden' name='csrf_token' value='" . csrf_token() . "'>
+                                <input type='hidden' name='task-id' value='{$task->getId()}'>";
+                        
+                        if (!$task->getCompleted()) {
+                            echo "<button class='btn action-btn complete-btn' type='submit' name='action' value='complete'>Mark as Complete</button>";
+                        }
+
+                        echo "<button class='btn action-btn delete-btn' type='submit' title='Delete task' aria-label='Delete task' name='action' value='delete'>
+                                <svg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48px' >
+                                    <path class='delete-icon' d='M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z'/>
+                                </svg>
+                            </button>
+                            </form>
                         </div>";
-
-                    if ($task->getCompleted()) {
-                        echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp role='img' aria-label='Task complete'>
-                            <title>Task complete</title>
-                            <path class='complete-icon' title='Task complete' d='M400-318 247-471l42-42 111 111 271-271 42 42-313 313Z'/>
-                        </svg>";
-                    } else {
-                        echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp' role='img' aria-label='Task incomplete'>
-                            <title>Task incomplete</title>
-                            <path class='incomplete-icon' d='M240-450v-60h480v60H240Z'/>
-                        </svg>";
                     }
-                    
-                    echo "<form method='post' action='actions.php'>
-                            <input type='hidden' name='csrf_token' value='" . csrf_token() . "'>
-                            <input type='hidden' name='task-id' value='{$task->getId()}'>";
-                    
-                    if (!$task->getCompleted()) {
-                        echo "<button class='btn action-btn complete-btn' type='submit' name='action' value='complete'>Mark as Complete</button>";
-                    }
-
-                    echo "<button class='btn action-btn delete-btn' type='submit' title='Delete task' aria-label='Delete task' name='action' value='delete'>
-                            <svg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48px' >
-                                <path class='delete-icon' d='M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z'/>
-                            </svg>
-                        </button>
-                        </form>
-                    </div>";
                 }
             }
-        }
-    ?>
+        ?>
     <a href="create.php"><button class="btn redirect-btn">Add Task</button></a>
+    </div>
 </main>
 
 <?php
