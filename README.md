@@ -8,9 +8,30 @@ Before beginning, make sure PHP is installed on your system and added as a PATH 
 - Enter the command php -S localhost:8080 -t public to start the server.
 - Go to http://localhost:8080 to view the website.
 2. Create a task
+- On the homepage (index.php), click the "Add Task" button.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014342" src="https://github.com/user-attachments/assets/5354ac19-7012-421e-844d-893f233fdc3c" />
+- At least enter a title and select a desired priority. Optionally, you can provide a description and date as well. Click the "Create New Task" button when you're ready to submit your info.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014511" src="https://github.com/user-attachments/assets/5849c0e2-16d7-4b08-b2ed-14aa9f08cdcb" />
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014555" src="https://github.com/user-attachments/assets/3ff3edb6-742a-4a76-8e57-ccc7f53088fd" />
+- View your new task displayed on the homepage at the bottom of the task list.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014629" src="https://github.com/user-attachments/assets/b7ab16f6-09ad-4ee3-b213-9a7b77c57028" />
 3. Search and filter tasks
+- Filter for tasks of a specific priority.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014823" src="https://github.com/user-attachments/assets/134de894-b35b-4c06-b49c-315e84e62a63" />
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014915" src="https://github.com/user-attachments/assets/45aa4d4b-fb0f-47f2-a27e-5e9799d51f50" />
+- Search for phrases in the title or description of tasks. You can pair this with one or both of the other filters (paired with completion status filter here).
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 020158" src="https://github.com/user-attachments/assets/18298e26-274b-46c1-8101-2341ed121888" />
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015107" src="https://github.com/user-attachments/assets/90464654-9973-4bad-a41f-607864492106" />
 4. Complete a task
+- Click the "Mark as Completed" button on any uncompleted task. This will change the dash into a checkmark.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015209" src="https://github.com/user-attachments/assets/c58e78f7-3ff0-4600-a3fd-e59e14d19bbd" />
+- A flash message stating "Task completed" will appear on the screen temporarily to indicate that the task has been marked as completed.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015124" src="https://github.com/user-attachments/assets/7b0dda73-a53b-4e88-bbb2-adb70fd3f3b8" />
 5. Delete a task
+- Click the delete button (with a trash can icon) on any task. This will remove the task from the list.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015246" src="https://github.com/user-attachments/assets/14fcb445-2087-4b00-ab0c-d4abbe818eb2" />
+- A flash message stating "Task deleted" will appear on the screen temporarily to indicate that the task has been deleted.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015227" src="https://github.com/user-attachments/assets/de7bc887-6923-4980-ab17-76152ac20ef2" />
 ### Running the Test Cases
 1. Add test cases (optional)
 - In test_cases.json, follow the format of the existing test cases to create your own.
