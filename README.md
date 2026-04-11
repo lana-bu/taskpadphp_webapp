@@ -19,9 +19,12 @@ Before beginning, make sure PHP is installed on your system and added as a PATH 
 - Filter for tasks of a specific priority.
   - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014823" src="https://github.com/user-attachments/assets/134de894-b35b-4c06-b49c-315e84e62a63" />
   - <img width="2240" height="1328" alt="Screenshot 2026-04-11 014915" src="https://github.com/user-attachments/assets/45aa4d4b-fb0f-47f2-a27e-5e9799d51f50" />
-- Search for phrases in the title or description of tasks. You can pair this with one or both of the other filters (paired with completion status filter here).
+- Filter for tasks with a specific completion status.
+  - <img width="2240" height="1328" alt="Screenshot 2026-04-11 021136" src="https://github.com/user-attachments/assets/88584601-772a-4c45-b4e5-bc533424afb1" />
+- Search for phrases in the title or description of tasks.
   - <img width="2240" height="1328" alt="Screenshot 2026-04-11 020158" src="https://github.com/user-attachments/assets/18298e26-274b-46c1-8101-2341ed121888" />
   - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015107" src="https://github.com/user-attachments/assets/90464654-9973-4bad-a41f-607864492106" />
+- You can combine the search and filter fields to look for very specific tasks.
 4. Complete a task
 - Click the "Mark as Completed" button on any uncompleted task. This will change the dash into a checkmark.
   - <img width="2240" height="1328" alt="Screenshot 2026-04-11 015209" src="https://github.com/user-attachments/assets/c58e78f7-3ff0-4600-a3fd-e59e14d19bbd" />
