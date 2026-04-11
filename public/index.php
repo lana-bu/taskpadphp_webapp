@@ -106,27 +106,36 @@ include "../src/templates/header.php";
                     echo "<span>No tasks match your filters.</span>";
                 } else {
                     foreach($taskList as $task) {
+                        // convert string to date object
+                        $dueDate = new DateTime($task->getDue());
+
+                        // convert to Monthname day, year format
+                        $formattedDate = $dueDate->format("F d, Y");
                         echo "<div class='list-item'>
-                            <span class='task-title'>{$task->getTitle()}</span>
-                            <div class='task-info'>
-                                <span class='task-element task-description'>Description: {$task->getDescription()}</span>
-                                <span class='task-element task-priority'>Priority: {$task->getPriority()}</span>
-                                <span class='task-element task-due'>Due by: {$task->getDue()}</span>
-                            </div>";
+                            <span class='task-element task-title'>{$task->getTitle()}</span>
+                            <span class='task-element task-description'>{$task->getDescription()}</span>
+                            <span class='task-element task-due'>Due by: {$formattedDate}</span>";
+                        if ($task->getPriority() === 'Low') {
+                            echo "<span class='task-element task-priority' title='Low priority'>!</span>";
+                        } else if ($task->getPriority() === 'Medium') {
+                            echo "<span class='task-element task-priority' title='Medium priority'>!!</span>";
+                        } else { // high priority
+                            echo "<span class='task-element task-priority' title='High priority'>!!!</span>";
+                        }
 
                         if ($task->getCompleted()) {
-                            echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp role='img' aria-label='Task complete'>
+                            echo "<svg class='task-element task-status' xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' role='img' aria-label='Task complete'>
                                 <title>Task complete</title>
                                 <path class='complete-icon' title='Task complete' d='M400-318 247-471l42-42 111 111 271-271 42 42-313 313Z'/>
                             </svg>";
                         } else {
-                            echo "<svg class='task-status' xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48xp' role='img' aria-label='Task incomplete'>
+                            echo "<svg class='task-element task-status' xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' role='img' aria-label='Task incomplete'>
                                 <title>Task incomplete</title>
                                 <path class='incomplete-icon' d='M240-450v-60h480v60H240Z'/>
                             </svg>";
                         }
                         
-                        echo "<form method='post' action='actions.php'>
+                        echo "<form class='actions' method='post' action='actions.php'>
                                 <input type='hidden' name='csrf_token' value='" . csrf_token() . "'>
                                 <input type='hidden' name='task-id' value='{$task->getId()}'>";
                         
@@ -135,7 +144,7 @@ include "../src/templates/header.php";
                         }
 
                         echo "<button class='btn action-btn delete-btn' type='submit' title='Delete task' aria-label='Delete task' name='action' value='delete'>
-                                <svg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 -960 960 960' width='48px' >
+                                <svg class='delete-svg' xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' >
                                     <path class='delete-icon' d='M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z'/>
                                 </svg>
                             </button>
