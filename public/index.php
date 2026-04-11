@@ -22,42 +22,44 @@ include "../src/templates/header.php";
             </svg>
             <input type="text" name='q' class="search-input" placeholder='Search for tasks...' value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" />
         </div>
-        <div class='form-input-group filter-box'>
-            <label for="priority" class="form-label filter-label">Priority:</label>
-            <select name="priority" class="form-input filter-input">
-                <option value="">Any</option>
-                <option <?php
-                    if (($_GET['priority'] ?? '') === 'Low') {
-                        echo 'selected';
-                    }
-                ?> value="Low">Low</option>
-                <option <?php
-                    if (($_GET['priority'] ?? '') === 'Medium') {
-                        echo 'selected';
-                    }
-                ?> value="Medium">Medium</option>
-                <option <?php
-                    if (($_GET['priority'] ?? '') === 'High') {
-                        echo 'selected';
-                    }
-                ?> value="High">High</option>
-            </select>
-        </div>
-        <div class='form-input-group filter-box'>
-            <label for="status" class="form-label filter-label">Completion Status:</label>
-            <select name="status" class="form-input filter-input">
-                <option value="">Any</option>
-                <option <?php
-                    if (($_GET['status'] ?? '') === 'Complete') {
-                        echo 'selected';
-                    }
-                ?> value="Complete">Complete</option>
-                <option <?php
-                    if (($_GET['status'] ?? '') === 'Incomplete') {
-                        echo 'selected';
-                    }
-                ?> value="Incomplete">Incomplete</option>
-            </select>
+        <div class='filters'>
+            <div class='form-input-group filter-box'>
+                <label for="priority" class="form-label filter-label">Priority:</label>
+                <select name="priority" class="form-input filter-input">
+                    <option value="">Any</option>
+                    <option <?php
+                        if (($_GET['priority'] ?? '') === 'Low') {
+                            echo 'selected';
+                        }
+                    ?> value="Low">Low</option>
+                    <option <?php
+                        if (($_GET['priority'] ?? '') === 'Medium') {
+                            echo 'selected';
+                        }
+                    ?> value="Medium">Medium</option>
+                    <option <?php
+                        if (($_GET['priority'] ?? '') === 'High') {
+                            echo 'selected';
+                        }
+                    ?> value="High">High</option>
+                </select>
+            </div>
+            <div class='form-input-group filter-box'>
+                <label for="status" class="form-label filter-label">Completion Status:</label>
+                <select name="status" class="form-input filter-input">
+                    <option value="">Any</option>
+                    <option <?php
+                        if (($_GET['status'] ?? '') === 'Complete') {
+                            echo 'selected';
+                        }
+                    ?> value="Complete">Complete</option>
+                    <option <?php
+                        if (($_GET['status'] ?? '') === 'Incomplete') {
+                            echo 'selected';
+                        }
+                    ?> value="Incomplete">Incomplete</option>
+                </select>
+            </div>
         </div>
         <button type="submit" class="btn">Filter</button>               
     </form>

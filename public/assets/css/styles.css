@@ -76,13 +76,13 @@ body {
 .complete-icon {
     fill: var(--accent-color);
     stroke: var(--accent-color);
-    stroke-width: 20px;
+    stroke-width: 30px;
 }
 
 .incomplete-icon {
     fill: var(--primary-color);
     stroke: var(--primary-color);
-    stroke-width: 20px;
+    stroke-width: 30px;
 }
 
 .delete-svg {
@@ -201,7 +201,6 @@ input:focus, select:focus {
     margin: 0.5em 0;
     border: 2px solid var(--primary-color);
     border-radius: 20px;
-    width: 90%;
     font-size: 0.65em;
 }
 
@@ -334,7 +333,30 @@ a {
 
 /* mobile landscape layout (480px to 767px) */
 @media only screen and (min-width: 480px) {
+    .filters {
+        display: flex;
+    }
 
+    .filter-box {
+        padding: var(--spacing);
+    }
+
+    .list-item {
+        font-size: 0.8em;
+        max-width: 80%;
+    }
+
+    .actions {
+        gap: 1em;
+    }
+
+    .create-form {
+        font-size: 1.4em;
+    }
+
+    .back-btn {
+        font-size: 0.9em;
+    }
 }
 
 /* tablet layout (768px to 1023px) */
