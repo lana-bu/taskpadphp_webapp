@@ -40,14 +40,14 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
-    <a href="index.php"><button class="btn redirect-btn">Back to List</button></a>
+    <a href="index.php"><button class="btn redirect-btn back-btn">Back to List</button></a>
     <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-input-group">
+                <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <label for="title" class="form-label">Title*:</label>
                     <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="<?php
                         if (isset($validation["sanitized"])) {
                             echo $validation["sanitized"]["title"];
@@ -61,8 +61,8 @@ include "../src/templates/header.php";
                 </div>
             </div>
             <div class="form-input-group">
+                <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
-                    <label for="description" class="form-label">Description:</label>
                     <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="<?php
                         if (isset($validation["sanitized"])) {
                             echo $validation["sanitized"]["description"];
@@ -76,8 +76,8 @@ include "../src/templates/header.php";
                 </div>
             </div>
             <div class="form-input-group">
+                <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
-                    <label for="priority" class="form-label">Priority*:</label>
                     <select name="priority" id="priority" class="form-input">
                         <option <?php
                             if (!isset($validation["sanitized"]) || $validation["sanitized"]["priority"] === "Low") {
@@ -100,16 +100,18 @@ include "../src/templates/header.php";
             </div>
             <div class="form-input-group">
                 <label for="due" class="form-label">Due date:</label>
-                <input type="date" name="due" id="due" class="form-input" value="<?php
-                    if (isset($validation["sanitized"])) {
-                        echo $validation["sanitized"]["due"];
-                    }
-                ?>" />
-                <span class='info-msg invalid-msg'><?php
-                    if (isset($validation["errors"]["due"])) {
-                        echo $validation["errors"]["due"];
-                    }
-                ?></span>                
+                <div class='input-box'>
+                    <input type="date" name="due" id="due" class="form-input" value="<?php
+                        if (isset($validation["sanitized"])) {
+                            echo $validation["sanitized"]["due"];
+                        }
+                    ?>" />
+                    <span class='info-msg invalid-msg'><?php
+                        if (isset($validation["errors"]["due"])) {
+                            echo $validation["errors"]["due"];
+                        }
+                    ?></span>
+                </div>               
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>

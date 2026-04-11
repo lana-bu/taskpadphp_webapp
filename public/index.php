@@ -16,13 +16,13 @@ include "../src/templates/header.php";
 <main class="content-container">
     <div class="flash"><?php display_flash_message('action'); ?></div>
     <form class='search' method='get' action='index.php'>
-        <div class='input-box search-bar'>
+        <div class='form-input-group search-bar'>
             <svg class='search-svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                 <path class="search-icon" d="M796-121 533-384q-30 26-70 40.5T378-329q-108 0-183-75t-75-181q0-106 75-181t182-75q106 0 180.5 75T632-585q0 43-14 83t-42 75l264 262-44 44ZM377-389q81 0 138-57.5T572-585q0-81-57-138.5T377-781q-82 0-139.5 57.5T180-585q0 81 57.5 138.5T377-389Z"/>
             </svg>
             <input type="text" name='q' class="search-input" placeholder='Search for tasks...' value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" />
         </div>
-        <div class='input-box filter-box'>
+        <div class='form-input-group filter-box'>
             <label for="priority" class="form-label filter-label">Priority:</label>
             <select name="priority" class="form-input filter-input">
                 <option value="">Any</option>
@@ -43,7 +43,7 @@ include "../src/templates/header.php";
                 ?> value="High">High</option>
             </select>
         </div>
-        <div class='input-box filter-box'>
+        <div class='form-input-group filter-box'>
             <label for="status" class="form-label filter-label">Completion Status:</label>
             <select name="status" class="form-input filter-input">
                 <option value="">Any</option>
