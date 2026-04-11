@@ -60,7 +60,6 @@ class Task {
 }
 
 class TaskRepository {
-    private static TaskRepository $instance;
     private string $path = "../data/tasks.json";
     private array $tasks = array(); // initialize empty array so objects can be added to it
 
