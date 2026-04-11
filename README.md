@@ -1,7 +1,25 @@
 # taskpadphp_webapp
-This will be a web app that uses PHP for server-side processing.
+This is my Project #2 assignment for my CIS 435 (Web Technology) course at UM-Dearborn. This web app keeps track of your tasks by allowing you to search for, complete, delete, and add any tasks as needed. It uses PHP server-side processing to dynamically access and update the task list.
 ## Run Instructions
-(run instructions)
+Before beginning, make sure PHP is installed on your system and added as a PATH variable. You can download PHP with the free XAMPP package. If using XAMPP, add C:\xampp\php to the PATH in your system's environment variables.
+### Running the Website
+1. Run the server
+- In the terminal, go to the root folder of the project (taskpadphp_webapp).
+- Enter the command php -S localhost:8080 -t public to start the server.
+- Go to http://localhost:8080 to view the website.
+2. Create a task
+3. Search and filter tasks
+4. Complete a task
+5. Delete a task
+### Running the Test Cases
+1. Add test cases (optional)
+- In test_cases.json, follow the format of the existing test cases to create your own.
+- Make sure to set actualValid and passed to null so that the automated test runner will update the values according to the test case results.
+2. Run automated tests
+- In the terminal, go to the root folder of the project (taskpadphp_webapp).
+- Enter the command php tests/run_tests.php to execute the automated test runner.
+- View the results of each test outputted in the terminal.
+
 ## Sources
 ### Code Help
 - Serving PHP files outside of htdocs directory: https://tonyfrenzy.medium.com/xampp-serving-from-any-directory-outside-of-htdocs-22a93f1b8815
