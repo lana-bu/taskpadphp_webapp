@@ -1,4 +1,3 @@
-<!-- load/save JSON helpers -->
 <?php
 
 class Task {
@@ -18,25 +17,16 @@ class Task {
         $this->completed = $task["completed"];
     }
 
-    public function printInfo() {
-        echo htmlspecialchars($this->id);
-        echo htmlspecialchars($this->title);
-        echo htmlspecialchars($this->description);
-        echo htmlspecialchars($this->priority);
-        echo htmlspecialchars($this->due);
-        echo htmlspecialchars($this->completed);
-    }
-
     public function getId() {
         return $this->id;
     }
 
     public function getTitle() {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     public function getDescription() {
-        return $this->description;
+        return htmlspecialchars($this->description);
     }
 
     public function getPriority() {
@@ -118,23 +108,20 @@ class TaskRepository {
         $this->saveJson();
     }
 
-    public function completeTask(Task $task) { // maybe pass ID isntead
-        $task->markAsComplete(); // should hopefully mark task object already in list as complete
-        // $id = $task->getId();
-
-        // foreach($this->tasks as $taskObject) {
-        //     if ($taskObject->getID === $id) { // tasks match
-        //         $taskObject = $task; // update existing tasks
-        //         break; // stop looking
-        //     }
-        // }
+    public function completeTask(string $id) {
+        foreach($this->tasks as $task) {
+            if ($task->getId() === $id) { // tasks match
+                $task->markAsComplete();
+                break; // stop looking
+            }
+        }
 
         $this->saveJson();
     }
 
     public function deleteTask(string $id) {
         foreach($this->tasks as $task) {
-            if ($task->getID === $id) { // tasks match
+            if ($task->getId() === $id) { // tasks match
                 $this->tasks = array_filter($this->tasks, function($taskObject) use ($task) {
                     return $taskObject !== $task; // filter for non-matching tasks
                 });

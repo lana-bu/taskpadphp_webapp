@@ -1,5 +1,3 @@
-<!-- form (GET) and handler (POST) -->
-
 <?php 
 // for token check
 require_once("../src/csrf.php");
@@ -14,18 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Invalid CSRF token');
     }
 
-    // validate, save, redirect to index.php (PRG pattern)
+    // include necessary classes and functions
     require_once("../src/validation.php");
     require_once("../src/storage.php");
 
-    $formInput = array("id" => uniqid(), "title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due'], "completed" => false);
+    // validate input
+    $formInput = array("title" => $_POST['title'], "description" => $_POST['description'], "priority" => $_POST['priority'], "due" => $_POST['due']);
     $validation = validateCreate($formInput);
-    $sanitizedInput = $validation[2];
-    $data = array("id" => uniqid(),"title" => $sanitizedInput['title'], "description" => $sanitizedInput['description'], "priority" => $sanitizedInput['priority'], "due" => $sanitizedInput['due'], "completed" => false);
-    $taskRepo = new TaskRepository();
-    $task = new Task($data); // sanitized input
-    $taskRepo->addTask($task);
-    header('Location: index.php');
+
+    // save input to task repository and redirect to index.php (if valid)
+    if ($validation["isValid"]) {
+        $sanitized = $validation["sanitized"];
+        $data = array("id" => $sanitized['id'],"title" => $sanitized['title'], "description" => $sanitized['description'], "priority" => $sanitized['priority'], "due" => $sanitized['due'], "completed" => false);
+        $taskRepo = new TaskRepository();
+        $task = new Task($data); // sanitized input
+        $taskRepo->addTask($task);
+        header('Location: index.php');
+        exit;
+    }
 }
 
 // site header
@@ -36,37 +40,76 @@ include "../src/templates/header.php";
 ?>
 
 <main class="content-container">
-    <button class="btn redirect-btn back-btn" onclick="location.href='index.php'">Back to List</button>
+    <a class="btn redirect-btn href-btn" href="index.php" role="button">Back to List</a>
     <form action="create.php" method="post" class="create-form">
         <fieldset>
             <legend>Task Information</legend>
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-input-group">
-                <label for="title" class="form-label">Title*:</label>
                 <div class='input-box'>
-                    <input type="text" name="title" id="title" required="required" class="form-input" placeholder="Enter title..." value="" />
-                    <!-- <span aria-live='polite' class='info-msg invalid-msg'>Please provide a name.</span> -->
+                    <label for="title" class="form-label">Title*:</label>
+                    <input type="text" name="title" id="title" class="form-input" placeholder="Enter title..." value="<?php
+                        if (isset($validation["sanitized"])) {
+                            echo $validation["sanitized"]["title"];
+                        }
+                    ?>" />
+                    <span class='info-msg invalid-msg'><?php
+                        if (isset($validation["errors"]["title"])) {
+                            echo $validation["errors"]["title"];
+                        }
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="description" class="form-label">Description:</label>
                 <div class='input-box'>
-                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="" />        
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" name="description" id="description" class="form-input" placeholder="Enter description..." value="<?php
+                        if (isset($validation["sanitized"])) {
+                            echo $validation["sanitized"]["description"];
+                        }
+                    ?>" />
+                    <span class='info-msg invalid-msg'><?php
+                        if (isset($validation["errors"]["description"])) {
+                            echo $validation["errors"]["description"];
+                        }
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
-                <label for="priority" class="form-label">Priority*:</label>
                 <div class='input-box'>
-                    <select name="priority" id="priority" required="required" class="form-input">
-                        <option selected="true" value="Low" class="form-option">Low</option>
-                        <option value="Medium" class="form-option">Medium</option>
-                        <option value="High" class="form-option">High</option>
+                    <label for="priority" class="form-label">Priority*:</label>
+                    <select name="priority" id="priority" class="form-input">
+                        <option <?php
+                            if (!isset($validation["sanitized"]) || $validation["sanitized"]["priority"] === "Low") {
+                                echo "selected";
+                            }
+                        ?> value="Low" class="form-option">Low</option>
+                        <option <?php
+                            if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "Medium") {
+                                echo "selected";
+                            }
+                        ?> value="Medium" class="form-option">Medium</option>
+                        <option <?php if (isset($validation["sanitized"]) && $validation["sanitized"]["priority"] === "High") { echo "selected"; } ?> value="High" class="form-option">High</option>
                     </select>
+                    <span class='info-msg invalid-msg'><?php
+                        if (isset($validation["errors"]["priority"])) {
+                            echo $validation["errors"]["priority"];
+                        }
+                    ?></span>
                 </div>
             </div>
             <div class="form-input-group">
                 <label for="due" class="form-label">Due date:</label>
-                <input type="date" name="due" id="due" class="form-input" value="" />                        
+                <input type="date" name="due" id="due" class="form-input" value="<?php
+                    if (isset($validation["sanitized"])) {
+                        echo $validation["sanitized"]["due"];
+                    }
+                ?>" />
+                <span class='info-msg invalid-msg'><?php
+                    if (isset($validation["errors"]["due"])) {
+                        echo $validation["errors"]["due"];
+                    }
+                ?></span>                
             </div>
             <span class="info-msg">*Required field</span>
         </fieldset>

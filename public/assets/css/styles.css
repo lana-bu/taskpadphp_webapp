@@ -1,7 +1,7 @@
 :root {
-    --accent-color: #68c8cf;
-    --secondary-color: #0e1c36;
     --primary-color: #477998;
+    --secondary-color: #0e1c36;
+    --accent-color: #68c8cf;
     --danger-color: #dd614a;
     --light-color: #ffede1;
     --spacing: 0.5em;
@@ -52,16 +52,48 @@ body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     margin-top: var(--spacing);
+    box-shadow: 0 50vh 0 50vh var(--primary-color); /*so footer background color extends to bottom when main content is short */
 }
-
-
 
 .content-section {
     padding: var(--spacing);
 }
 
-.content-section a {
-    color: var(--accent-color-2);
+.logo {
+    fill: var(--secondary-color);
+    stroke: var(--secondary-color);
+    stroke-width: 20;
+}
+
+.search-icon {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+    stroke-width: 20;
+}
+
+.complete-icon {
+    fill: var(--accent-color);
+    stroke: var(--accent-color);
+    stroke-width: 20;
+}
+
+.incomplete-icon {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+    stroke-width: 20;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.flash {
+    animation: fadeOut 1s ease-in 1s forwards;
+}
+
+.invalid-msg {
+  color: var(--danger-color);
 }
 
 .btn {

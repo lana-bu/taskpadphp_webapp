@@ -1,4 +1,3 @@
-<!-- validation/sanitization helpers -->
 <?php
 function validateCreate(array $input) : array {
     $errors = [];
@@ -27,9 +26,9 @@ function validateCreate(array $input) : array {
         $errors['priority'] = 'Invalid priority selected.';
     }
 
-    // Due date validation, modify for date selection
+    // Due date validation
     if ($due !== '') {
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $due)) {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $due)) { // should never be encountered because of date selection
             $errors['due'] = 'Date must be in YYYY-MM-DD format.';
         } else {
             // Further check if it's a real date
@@ -45,6 +44,7 @@ function validateCreate(array $input) : array {
 
     // Return the sanitized data (even if it's invalid, this can be useful for re-populating form)
     $sanitized = [
+        'id' => uniqid(), // generate unique ID
         'title' => $title,
         'description' => $description,
         'priority' => $priority,
@@ -52,5 +52,5 @@ function validateCreate(array $input) : array {
         'completed' => false
     ];
 
-    return [$isValid, $errors, $sanitized];
+    return ["isValid" => $isValid, "errors" => $errors, "sanitized" => $sanitized];
 }
