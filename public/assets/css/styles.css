@@ -213,7 +213,6 @@ input:focus, select:focus {
 
 .task-description {
     grid-area: description;
-    text-align: left;
 }
 
 .task-due {
@@ -241,10 +240,6 @@ input:focus, select:focus {
     grid-area: actions;
     display: flex;
     align-items: center;
-}
-
-.action-btn {
-    height: 64px;
 }
 
 a {
@@ -381,10 +376,6 @@ a {
         width: 100px;
     }
 
-    .action-btn {
-        height: 86px;
-    }
-
     .delete-svg {
         width: 52px;
     }
@@ -394,5 +385,14 @@ a {
 @media only screen and (min-width: 1024px) {
     .content-section {
         padding: 2em;
+    }
+
+    .list-item {
+        width: 60%;
+        padding: 1em;
+    }
+
+    .task-description {
+        width: 70%;
     }
 }

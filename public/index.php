@@ -108,15 +108,23 @@ include "../src/templates/header.php";
                     echo "<span>No tasks match your filters.</span>";
                 } else {
                     foreach($taskList as $task) {
-                        // convert string to date object
-                        $dueDate = new DateTime($task->getDue());
-
-                        // convert to Monthname day, year format
-                        $formattedDate = $dueDate->format("F d, Y");
                         echo "<div class='list-item'>
-                            <span class='task-element task-title'>{$task->getTitle()}</span>
-                            <span class='task-element task-description'>{$task->getDescription()}</span>
-                            <span class='task-element task-due'>Due by: {$formattedDate}</span>";
+                            <span class='task-element task-title'>{$task->getTitle()}</span>";
+                        
+                        if ($task->getDescription() !== "") {
+                            echo "<span class='task-element task-description'>{$task->getDescription()}</span>";
+                        }
+
+                        if ($task->getDue() !== "") {
+                            // convert string to date object
+                            $dueDate = new DateTime($task->getDue());
+
+                            // convert to Monthname day, year format
+                            $formattedDate = $dueDate->format("F d, Y");
+
+                            echo "<span class='task-element task-due'>Due by: {$formattedDate}</span>";
+                        }
+    
                         if ($task->getPriority() === 'Low') {
                             echo "<span class='task-element task-priority' title='Low priority'>!</span>";
                         } else if ($task->getPriority() === 'Medium') {
